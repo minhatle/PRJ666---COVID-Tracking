@@ -1,10 +1,13 @@
 module.exports = app => {
     const users = require("../controllers/user.controller.js");
-  
+    
     var router = require("express").Router();
   
     // Create a new User
     router.post("/", users.create);
+
+    //retrieve by username and password
+    router.post("/login",users.findUser);
   
     // Retrieve all Users
     router.get("/", users.findAll);

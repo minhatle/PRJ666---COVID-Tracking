@@ -1,4 +1,5 @@
 const db = require("../models");
+const Bcrypt = require("bcryptjs");
 const User = db.users;
 
 // Create and Save a new User
@@ -12,7 +13,7 @@ exports.create = (req, res) => {
   // Create a user
   const user = new User({
     userName: req.body.userName,
-    password: req.body.password,
+    password: Bcrypt.hashSync(req.body.password, 10),
     email: req.body.email,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -20,7 +21,8 @@ exports.create = (req, res) => {
   });
 
   // Save user in the database
-  user.save()
+  user
+    .save()
     .then((data) => {
       res.send(data);
     })
@@ -61,6 +63,29 @@ exports.findOne = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({ message: "Error retrieving User with id=" + id });
+    });
+};
+
+//find a single User with a username
+exports.findUser = (req, res) => {
+  const userName = req.body.userName;
+
+  User.findOne({ userName: userName })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: "Not found User with username" + userName });
+      } else if (!Bcrypt.compareSync(req.body.password, data.password)) {
+        return res.status(400).send({ message: "The password is invalid" });
+      } else {
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with username" + userName });
     });
 };
 
