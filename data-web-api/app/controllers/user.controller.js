@@ -1,4 +1,5 @@
 const db = require("../models");
+const Bcrypt = require("bcryptjs");
 const User = db.users;
 
 // Create and Save a new User
@@ -12,7 +13,7 @@ exports.create = (req, res) => {
   // Create a user
   const user = new User({
     userName: req.body.userName,
-    password: req.body.password,
+    password: Bcrypt.hashSync(req.body.password, 10),
     email: req.body.email,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -20,7 +21,8 @@ exports.create = (req, res) => {
   });
 
   // Save user in the database
-  user.save()
+  user
+    .save()
     .then((data) => {
       res.send(data);
     })
@@ -52,15 +54,45 @@ exports.findAll = (req, res) => {
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-
   User.findById(id)
     .then((data) => {
       if (!data)
         res.status(404).send({ message: "Not found User with id " + id });
-      else res.send(data);
+      else {
+        console.log(data);
+        res.send(data);
+      }
     })
     .catch((err) => {
       res.status(500).send({ message: "Error retrieving User with id=" + id });
+    });
+};
+
+//find a single User with a username
+exports.findUser = (req, res) => {
+  const userName = req.params.username
+    ? req.params.username
+    : req.body.userName;
+
+  User.findOne({ userName: userName })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: "Not found User with username" + userName });
+      } else if (
+        req.body.password &&
+        !Bcrypt.compareSync(req.body.password, data.password)
+      ) {
+        return res.status(400).send({ message: "The password is invalid" });
+      } else {
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with username" + userName });
     });
 };
 
@@ -86,6 +118,45 @@ exports.update = (req, res) => {
       res.status(500).send({
         message: "Error updating user with id=" + id,
       });
+    });
+};
+
+exports.updateByUser = (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
+  }
+
+  const userName = req.params.username;
+
+  User.findOne({ userName: userName })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: "Not found User with username" + userName });
+      } else {
+        User.findByIdAndUpdate(data._id, req.body, { useFindAndModify: false })
+          .then((data) => {
+            if (!data) {
+              res.status(404).send({
+                message: `Cannot update user with id=${data._id}. Maybe user was not found!`,
+              });
+            } else res.send({ message: "User was updated successfully." });
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: "Error updating user with id=" + data._id,
+            });
+          });
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with username" + userName });
     });
 };
 

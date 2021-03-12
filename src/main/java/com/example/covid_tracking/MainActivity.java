@@ -13,9 +13,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText login_email, login_pass;
+    String email;
+    private static final String SERVER = "https://hidden-caverns-06695.herokuapp.com/api/users/login";
+    private static AsyncHttpClient client = new AsyncHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                login();
+                try {
+                    login();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -44,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void login(){
-        String email = login_email.getText().toString().trim();
+    private void login() throws JSONException, UnsupportedEncodingException {
+        email = login_email.getText().toString().trim();
         String pass = login_pass.getText().toString();
+
+        JSONObject jsonParams = new JSONObject();
 
         boolean value = false;
 
@@ -55,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             login_email.requestFocus();
             return;
         }else
+            jsonParams.put("userName", email);
             value = true;
 
         if(TextUtils.isEmpty(pass)){
@@ -62,10 +85,30 @@ public class MainActivity extends AppCompatActivity {
             login_pass.requestFocus();
             return;
         }else
+            jsonParams.put("password", pass);
             value = true;
 
         if(value){
-            startActivity(new Intent(MainActivity.this, StatusActivity.class));
+
+            JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler(){@Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                Intent intent = new Intent(getBaseContext(), QuestionActivity.class);
+                intent.putExtra("USERNAME",email);
+                startActivity(intent);
+
+            }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    login_pass.setError("Incorrect Password");
+                    login_pass.requestFocus();
+
+            }
+
+            };
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(MainActivity.this, SERVER, entity, "application/json",responseHandler);
+
         }
     }
 

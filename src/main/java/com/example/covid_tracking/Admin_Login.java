@@ -14,6 +14,7 @@ public class Admin_Login extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstancesState) {
+
         super.onCreate(savedInstancesState);
         setContentView(R.layout.admin_login);
 
