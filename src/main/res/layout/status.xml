@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="@string/status"
             android:textAlignment="center"
-            android:textColor="@color/PrimaryDark"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="50sp"
             android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textAlignment="center"
-            android:textColor="@color/Primary"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_marginTop="25dp"

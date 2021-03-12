@@ -14,7 +14,12 @@ module.exports = app => {
   
     // Retrieve a single User with id
     router.get("/:id", users.findOne);
-  
+
+    // Retrieve a single User with id
+    router.get("/getUser/:username", users.findUser);
+    // Retrieve a single User with id
+    router.put("/getUser/:username", users.updateByUser);
+
     // Update a User with id
     router.put("/:id", users.update);
   
