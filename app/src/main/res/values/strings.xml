@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">COVID-Tracking</string>
+
+    <string name="create_new_acc">Create a New Account</string>
+    <string name="create_admin">Create a New Admin Account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="firstName">First Name</string>
+    <string name="manageName">Managers Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="address">Address</string>
+    <string name="number">PhoneNumber</string>
+    <string name="city">City</string>
+    <string name="province">Province</string>
+    <string name="postalCode">Postal Code</string>
+    <string name="user">Username</string>
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
+    <string name="screen">Select Business for Screening</string>
+    <string name="question">Fill Out COVID-19 Questionnaire</string>
+    <string name="qrcode">Business QRCODE</string>
+
+    <string name="id_number">ID Number</string>
+
+    <string name="status">Screening Results</string>
+    <string name="username">Hello User:\u0020</string>
+    <string name="business">Your screening for\u0020</string>
+
+    <string name="admin_login">Admin Login</string>
+    <string name="admin_signup">Admin SignUp</string>
+    <string name="search">Search For Phones</string>
+</resources>
