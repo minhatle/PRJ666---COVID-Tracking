@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:id="@+id/header_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/header_bg"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_view"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_new_acc"
+            android:textColor="#303F9F"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    <LinearLayout
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/signup_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/user"
+            android:autofillHints=""
+            android:inputType="text" />
+        <EditText
+            android:id="@+id/signup_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/password"
+            android:autofillHints=""
+            android:inputType="textPassword" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/signup_firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/firstName"
+            android:autofillHints=""
+            android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/signup_lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/lastName"
+            android:autofillHints=""
+            android:inputType="textPersonName" />
+    </LinearLayout>
+        <EditText
+            android:id="@+id/signup_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/email"
+            android:autofillHints=""
+            android:inputType="textEmailAddress"/>
+        <EditText
+            android:id="@+id/signup_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/address"
+            android:autofillHints=""
+            android:inputType="text"/>
+    <LinearLayout
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/signup_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/city"
+            android:autofillHints=""
+            android:inputType="text"/>
+        <EditText
+            android:id="@+id/signup_postalCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/postalCode"
+            android:autofillHints=""
+            android:inputType="text"/>
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:text="@string/signup"
+            android:textAllCaps="false"
+            android:textColor="@color/White"
+            android:background="@color/colorPrimaryDark"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/bottom_bg"/>
+    </LinearLayout>
+
+</RelativeLayout>
