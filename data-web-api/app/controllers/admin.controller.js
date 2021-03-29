@@ -1,6 +1,6 @@
 const db = require("../models");
 const Bcrypt = require("bcryptjs");
-const User = db.users;
+const Admin = db.admins;
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -11,19 +11,19 @@ exports.create = (req, res) => {
   }
 
   // Create a user
-  const user = new User({
+  const admin = new Admin({
     userName: req.body.userName,
     password: Bcrypt.hashSync(req.body.password, 10),
-    email: req.body.email,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
+    phoneNumber: req.body.phoneNumber,
+    businessID: req.body.businessID,
+    managerName: req.body.managerName,
     address: req.body.address,
     city: req.body.city,
-    postalCode: req.body.postalCode
+    postalCode: req.body.postalCode,
   });
 
   // Save user in the database
-  user
+  admin
     .save()
     .then((data) => {
       res.send(data);
@@ -42,13 +42,13 @@ exports.findAll = (req, res) => {
     ? { userName: { $regex: new RegExp(userName), $options: "i" } }
     : {};
 
-  User.find(condition)
+  Admin.find(condition)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving users.",
+        message: err.message || "Some error occurred while retrieving admins.",
       });
     });
 };
@@ -56,17 +56,17 @@ exports.findAll = (req, res) => {
 // Find a single User with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  User.findById(id)
+  Admin.findById(id)
     .then((data) => {
       if (!data)
-        res.status(404).send({ message: "Not found User with id " + id });
+        res.status(404).send({ message: "Not found Admin with id " + id });
       else {
         console.log(data);
         res.send(data);
       }
     })
     .catch((err) => {
-      res.status(500).send({ message: "Error retrieving User with id=" + id });
+      res.status(500).send({ message: "Error retrieving Admin with id=" + id });
     });
 };
 
@@ -75,18 +75,40 @@ exports.findUser = (req, res) => {
   const userName = req.params.username
     ? req.params.username
     : req.body.userName;
-
-  User.findOne({ userName: userName })
+  console.log(req.body);
+  Admin.findOne({ userName: userName })
     .then((data) => {
       if (!data) {
         res
           .status(404)
-          .send({ message: "Not found User with username" + userName });
+          .send({ message: "Not found Admin with username" + userName });
       } else if (
         req.body.password &&
         !Bcrypt.compareSync(req.body.password, data.password)
       ) {
         return res.status(400).send({ message: "The password is invalid" });
+      } else {
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with username" + userName });
+    });
+};
+
+exports.findUserByPostal = (req, res) => {
+  const postal = req.params.postalCode
+    ? req.params.postalCode
+    : req.body.postalCode;
+
+  Admin.findOne({ postalCode: postal })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: "Not found Admin with postal code" + postal });
       } else {
         res.send(data);
       }
@@ -108,7 +130,7 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Admin.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -132,14 +154,18 @@ exports.updateByUser = (req, res) => {
 
   const userName = req.params.username;
 
-  User.findOne({ userName: userName })
+  Admin.findOne({ userName: userName })
     .then((data) => {
       if (!data) {
         res
           .status(404)
           .send({ message: "Not found User with username" + userName });
       } else {
-        User.findByIdAndUpdate(data._id, req.body, { useFindAndModify: false })
+        Admin.findByIdAndUpdate(
+          data._id,
+          { $push: { users: req.body.users } },
+          { useFindAndModify: false }
+        )
           .then((data) => {
             if (!data) {
               res.status(404).send({
@@ -166,7 +192,7 @@ exports.updateByUser = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  User.findByIdAndRemove(id)
+  Admin.findByIdAndRemove(id)
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -187,7 +213,7 @@ exports.delete = (req, res) => {
 
 // Delete all Users from the database.
 exports.deleteAll = (req, res) => {
-  User.deleteMany({})
+  Admin.deleteMany({})
     .then((data) => {
       res.send({
         message: `${data.deletedCount} Users were deleted successfully!`,
