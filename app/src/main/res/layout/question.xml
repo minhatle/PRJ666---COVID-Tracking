@@ -2,17 +2,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <View
-        android:id="@+id/header_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/header_bg"/>
+    android:layout_height="match_parent"
+    android:background="@drawable/background2">
+
 
     <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/header_view"
         android:gravity="center"
         android:orientation="vertical">
@@ -23,8 +20,9 @@
             android:layout_marginBottom="20dp"
             android:text="COVID-19 Screening Questions"
             android:textColor="#303F9F"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/aquirebold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +30,8 @@
                 android:textColor="#303F9F"
                 android:textSize="12sp"
                 android:gravity="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/aquire"/>
             <LinearLayout
                 android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
@@ -49,7 +48,8 @@
                     android:gravity="center"
                     android:textColor="#303F9F"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/aquire"/>
 
                 <CheckBox
                     android:id="@+id/symptomsCheckNo"
@@ -61,7 +61,8 @@
                     android:text="No"
                     android:textColor="#303F9F"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                android:fontFamily="@font/aquire"/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +72,8 @@
                 android:textColor="#303F9F"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/aquire"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -88,7 +90,8 @@
                     android:gravity="center"
                     android:textColor="#303F9F"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/aquire"/>
 
                 <CheckBox
                     android:id="@+id/contactCheckNo"
@@ -100,7 +103,8 @@
                     android:gravity="center"
                     android:textColor="#303F9F"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/aquire"/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -110,7 +114,8 @@
                 android:textColor="#303F9F"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/aquire"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -127,7 +132,8 @@
                     android:gravity="center"
                     android:textColor="#303F9F"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/aquire"/>
 
                 <CheckBox
                     android:id="@+id/travelCheckNo"
@@ -139,7 +145,8 @@
                     android:textColor="#303F9F"
                     android:gravity="center"
                     android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/aquire"/>
             </LinearLayout>
         <Button
             android:id="@+id/btn_submit"
@@ -150,17 +157,8 @@
             android:text="Submit"
             android:textAllCaps="false"
             android:textColor="@color/White"
-            android:background="@color/colorPrimaryDark"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:background="@drawable/bottom_bg"/>
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/aquire"/>
     </LinearLayout>
 
 </RelativeLayout>

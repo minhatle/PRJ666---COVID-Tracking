@@ -20,6 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -119,6 +121,10 @@ public class QuestionActivity extends AppCompatActivity {
             }
             value = true;
         }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(new Date());
+        jsonParamsInner.put("date", date);
 
         if (value){
             jsonParamsOutter.put("questionnaire",jsonParamsInner);

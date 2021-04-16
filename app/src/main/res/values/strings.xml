@@ -19,6 +19,8 @@
     <string name="screen">Select Business for Screening</string>
     <string name="question">Fill Out COVID-19 Questionnaire</string>
     <string name="qrcode">Business QRCODE</string>
+    <string name="adminWelcome">Hello Business: </string>
+    <string name="successUsers">Customers Successfully Screened Today: </string>
 
     <string name="id_number">ID Number</string>
 

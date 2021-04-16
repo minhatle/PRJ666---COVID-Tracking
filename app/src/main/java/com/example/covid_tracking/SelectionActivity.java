@@ -19,13 +19,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class SelectionActivity extends AppCompatActivity {
     private static final String SERVER = "https://hidden-caverns-06695.herokuapp.com/api/admin/postalCode";
+    private static final String SERVER2 = "https://hidden-caverns-06695.herokuapp.com/api/admin/phoneNumber";
     private static final String USERSERVER = "https://hidden-caverns-06695.herokuapp.com/api/users/login";
+    private static final String ADMINSERVER = "https://hidden-caverns-06695.herokuapp.com/api/admin/getAdmin/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     @Override
@@ -70,6 +74,21 @@ public class SelectionActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button btn_phone = findViewById(R.id.btn_phone);
+        btn_phone.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    phoneSearch();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -106,8 +125,9 @@ public class SelectionActivity extends AppCompatActivity {
                             }
                             else {
                                 intent.putExtra("STATUS", "SCREENING SUCCESSFUL");
+                                addUserToAdmin(finalAdmin);
                             }
-                        } catch (JSONException e) {
+                        } catch (JSONException | UnsupportedEncodingException e) {
                             e.printStackTrace();
                             intent.putExtra("STATUS", "SCREENING UNSUCCESSFUL");
                         }
@@ -141,7 +161,22 @@ public class SelectionActivity extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
         return true;
     }
+    private void addUserToAdmin(String adminUsername) throws JSONException, UnsupportedEncodingException {
+        JSONObject jsonParams = new JSONObject();
+        JSONObject jsonParamsOutter = new JSONObject();
+        String username = getIntent().getStringExtra("USERNAME");
+        jsonParams.put("userName",username);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(new Date());
+        jsonParams.put("date", date);
+        jsonParamsOutter.put("users",jsonParams);
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler();
+        StringEntity entity = new StringEntity(jsonParamsOutter.toString());
+        client.put(SelectionActivity.this, ADMINSERVER+ adminUsername, entity, "application/json",responseHandler);
 
+
+
+    }
     private void postalSearch() throws JSONException, UnsupportedEncodingException {
         EditText postalCode = findViewById(R.id.search_postalCode);
         String postal = postalCode.getText().toString().trim();
@@ -192,8 +227,9 @@ public class SelectionActivity extends AppCompatActivity {
                                 }
                                 else {
                                     intent.putExtra("STATUS", "SCREENING SUCCESSFUL");
+                                    addUserToAdmin(finalAdmin);
                                 }
-                            } catch (JSONException e) {
+                            } catch (JSONException | UnsupportedEncodingException e) {
                                 e.printStackTrace();
                                 intent.putExtra("STATUS", "SCREENING UNSUCCESSFUL");
                             }
@@ -237,6 +273,105 @@ public class SelectionActivity extends AppCompatActivity {
             };
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(SelectionActivity.this, SERVER, entity, "application/json", responseHandler);
+
+        }
+    }
+    private void phoneSearch() throws JSONException, UnsupportedEncodingException {
+        EditText phoneNumber = findViewById(R.id.search_phone);
+        String phone = phoneNumber.getText().toString().trim();
+        JSONObject jsonParams = new JSONObject();
+
+        boolean value = false;
+
+        if (TextUtils.isEmpty(phone)){
+            phoneNumber.setError("Please Enter Postal Code");
+            phoneNumber.requestFocus();
+            return;
+        } else
+            jsonParams.put("phoneNumber", phone);
+        value = true;
+
+
+        if (value) {
+
+            JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                    JSONObject jsonParams = new JSONObject();
+                    String admin = "";
+                    try {
+                        admin = json.getString("userName");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String username = getIntent().getStringExtra("USERNAME");
+                    try {
+                        jsonParams.put("userName", username);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    final String finalAdmin = admin;
+                    JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                            Intent intent = new Intent(getBaseContext(), StatusActivity.class);
+                            try {
+                                JSONObject questions = json.getJSONObject("questionnaire");
+                                Boolean sym = questions.getBoolean("symptoms");
+                                Boolean trav = questions.getBoolean("travel");
+                                Boolean cont = questions.getBoolean("contact");
+                                if (sym || trav || cont){
+                                    intent.putExtra("STATUS", "SCREENING UNSUCCESSFUL");
+                                }
+                                else {
+                                    intent.putExtra("STATUS", "SCREENING SUCCESSFUL");
+                                    addUserToAdmin(finalAdmin);
+                                }
+                            } catch (JSONException | UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                                intent.putExtra("STATUS", "SCREENING UNSUCCESSFUL");
+                            }
+                            String username = getIntent().getStringExtra("USERNAME");
+                            intent.putExtra("USERNAME", username);
+                            intent.putExtra("ADMIN", finalAdmin);
+
+                            startActivity(intent);
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            super.onFailure(statusCode, headers, throwable, errorResponse);
+                            EditText errorPostal = findViewById(R.id.search_phone);
+                            errorPostal.setError("UserName Not Found");
+                            errorPostal.requestFocus();
+
+                        }
+
+
+                    };
+                    StringEntity entity = null;
+                    try {
+                        entity = new StringEntity(jsonParams.toString());
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    client.post(SelectionActivity.this, USERSERVER, entity, "application/json", responseHandler);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    EditText errorPostal = findViewById(R.id.search_phone);
+                    errorPostal.setError("Phone Number Not Found");
+                    errorPostal.requestFocus();
+
+                }
+
+            };
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(SelectionActivity.this, SERVER2, entity, "application/json", responseHandler);
 
         }
     }
