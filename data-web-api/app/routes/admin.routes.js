@@ -23,6 +23,9 @@ module.exports = app => {
     router.get("/postalCode",admins.findUserByPostal)
     router.post("/postalCode",admins.findUserByPostal)
 
+    router.get("/phoneNumber",admins.findUserByPhone)
+    router.post("/phoneNumber",admins.findUserByPhone)
+
     // Update a User with id
     router.put("/:id", admins.update);
   

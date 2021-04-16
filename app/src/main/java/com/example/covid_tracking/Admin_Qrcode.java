@@ -15,6 +15,14 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Admin_Qrcode extends AppCompatActivity {
     ImageView qrImage;
     @Override
@@ -26,6 +34,22 @@ public class Admin_Qrcode extends AppCompatActivity {
         QRCodeWriter writer = new QRCodeWriter();
         try {
             String content = getIntent().getStringExtra("ADMINDATA");
+            JSONObject adminData = new JSONObject(content);
+            JSONArray userArray = adminData.getJSONArray("users");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date currDate = new Date();
+            int count = 0;
+            for (int i = 0; i < userArray.length(); i++) {
+               Date tempDate = sdf.parse(userArray.getJSONObject(i).getString("date"));
+               SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+                if (fmt.format(currDate).equals(fmt.format(tempDate))){
+                    count++;
+                }
+            }
+            TextView adminName = findViewById(R.id.userNameAdmin);
+            adminName.setText(adminData.getString("userName"));
+            TextView numUsers = findViewById(R.id.numUsers);
+            numUsers.setText(String.valueOf(count));
             BitMatrix bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, 512, 512);
             int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();
@@ -37,7 +61,7 @@ public class Admin_Qrcode extends AppCompatActivity {
             }
             qrImage.setImageBitmap(bmp);
 
-        } catch (WriterException e) {
+        } catch (WriterException | JSONException | ParseException e) {
             e.printStackTrace();
         }
 

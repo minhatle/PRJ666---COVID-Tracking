@@ -4,33 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
     tools:context=".MainActivity">
-
-    <View
-        android:id="@+id/header_view"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/header_bg">
-    </View>
-
-    <TextView
-        android:layout_marginTop="35dp"
-        android:textColor="@color/White"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:text="@string/app_name"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/header_view"
         android:gravity="center"
         android:orientation="vertical">
-
+        <TextView
+            android:layout_marginTop="35dp"
+            android:textColor="@color/White"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:text="@string/app_name"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aquirebold"
+            android:gravity="center_horizontal" />
         <EditText
             android:id="@+id/login_email"
             android:layout_width="wrap_content"
@@ -57,6 +50,7 @@
             android:textColor="@color/White"
             android:background="@color/colorPrimaryDark"
             android:text="@string/login"
+            android:fontFamily="@font/aquire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -68,6 +62,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="center"
             android:text="@string/create_new_acc"
+            android:fontFamily="@font/aquirelight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -75,11 +70,6 @@
     <LinearLayout
         android:gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/bottom_bg"/>
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

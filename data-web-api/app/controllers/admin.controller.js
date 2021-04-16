@@ -120,6 +120,28 @@ exports.findUserByPostal = (req, res) => {
     });
 };
 
+exports.findUserByPhone = (req, res) => {
+  const phone = req.params.phoneNumber
+    ? req.params.phoneNumber
+    : req.body.phoneNumber;
+
+  Admin.findOne({ phoneNumber: phone })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: "Not found Admin with postal code" + phone});
+      } else {
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with username" + userName });
+    });
+};
+
 // Update a User by the id in the request
 exports.update = (req, res) => {
   if (!req.body) {

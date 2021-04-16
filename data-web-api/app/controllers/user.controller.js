@@ -1,6 +1,8 @@
 const db = require("../models");
 const Bcrypt = require("bcryptjs");
 const User = db.users;
+var fs = require("fs");
+var path = require('path');
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -161,6 +163,38 @@ exports.updateByUser = (req, res) => {
         .send({ message: "Error retrieving User with username" + userName });
     });
 };
+
+//add image 
+exports.updateWithImage = (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
+  }
+
+  const userName = req.params.username;
+
+  User.findOne({ userName: userName })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: "Not found User with username" + userName });
+      } else {
+        data.img.data = fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename))
+        data.img.contentType = 'image/png';
+        data.save();
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message)
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with username " + userName });
+    });
+};
+
 
 // Delete a User with the specified id in the request
 exports.delete = (req, res) => {

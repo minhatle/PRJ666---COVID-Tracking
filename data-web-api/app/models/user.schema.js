@@ -9,7 +9,11 @@ module.exports = (mongoose) => {
       address: String,
       city: String,
       postalCode: String,
-      questionnaire: { symptoms: Boolean, contact: Boolean, travel: Boolean },
+      questionnaire: { symptoms: Boolean, contact: Boolean, travel: Boolean, date:String},
+      img: { 
+        data: Buffer, 
+        contentType: String 
+     }
     },
     { timestamps: true }
   );

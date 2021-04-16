@@ -4,18 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StatusActivity">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/header_bg"/>
+    tools:context=".StatusActivity"
+    android:background="@drawable/background2">
 
     <LinearLayout
         android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <TextView
             android:layout_width="match_parent"
@@ -24,7 +22,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="50sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/aquirebold"/>
 
     <LinearLayout
         android:layout_marginTop="20dp"
@@ -42,7 +41,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/aquire"/>
 
         <TextView
             android:id="@+id/userNameStatus"
@@ -54,6 +54,7 @@
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_marginTop="0dp"
+            android:fontFamily="@font/aquire"
             />
     </LinearLayout>
         <LinearLayout
@@ -72,7 +73,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/aquire"/>
 
             <TextView
                 android:id="@+id/busNameStatus"
@@ -84,6 +86,7 @@
                 android:textStyle="bold"
                 android:textSize="25sp"
                 android:layout_marginTop="0dp"
+                android:fontFamily="@font/aquire"
                 />
         </LinearLayout>
         <LinearLayout
@@ -102,20 +105,13 @@
                 android:textStyle="bold"
                 android:textSize="25sp"
                 android:layout_marginTop="0dp"
+                android:fontFamily="@font/aquire"
                 />
         </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/bottom_bg"/>
-    </LinearLayout>
+
 
 
 </RelativeLayout>

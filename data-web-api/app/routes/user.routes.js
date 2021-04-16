@@ -1,8 +1,7 @@
-module.exports = app => {
+module.exports = (app , upload)  => {
     const users = require("../controllers/user.controller.js");
-    
     var router = require("express").Router();
-  
+    console.log(upload);
     // Create a new User
     router.post("/", users.create);
 
@@ -19,6 +18,8 @@ module.exports = app => {
     router.get("/getUser/:username", users.findUser);
     // Retrieve a single User with id
     router.put("/getUser/:username", users.updateByUser);
+    //update with photo
+    router.post("/uploadImage/:username", upload.single('image'), users.updateWithImage)
 
     // Update a User with id
     router.put("/:id", users.update);

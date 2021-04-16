@@ -13,7 +13,7 @@ module.exports = (mongoose) => {
           address: String,
           city: String,
           postalCode: String,
-          users: [userSchema]
+          users: [{userName: String, date: String}]
         },
         { timestamps: true }
       )
