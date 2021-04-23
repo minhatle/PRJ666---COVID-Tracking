@@ -15,7 +15,7 @@
         android:orientation="vertical">
         <TextView
             android:layout_marginTop="35dp"
-            android:textColor="@color/White"
+            android:textColor="@color/Black"
             android:textSize="30sp"
             android:textAlignment="center"
             android:text="@string/app_name"
@@ -59,10 +59,10 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/Black"
             android:layout_gravity="center"
             android:text="@string/create_new_acc"
-            android:fontFamily="@font/aquirelight"
+            android:fontFamily="@font/aquirebold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

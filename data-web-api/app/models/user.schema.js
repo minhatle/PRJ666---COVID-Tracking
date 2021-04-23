@@ -9,11 +9,13 @@ module.exports = (mongoose) => {
       address: String,
       city: String,
       postalCode: String,
+      covidStatus: String, 
       questionnaire: { symptoms: Boolean, contact: Boolean, travel: Boolean, date:String},
       img: { 
         data: Buffer, 
         contentType: String 
-     }
+     },
+     businesses: [{userName: String, date: String}]
     },
     { timestamps: true }
   );

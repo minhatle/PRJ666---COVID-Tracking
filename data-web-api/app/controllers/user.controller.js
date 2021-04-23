@@ -3,6 +3,7 @@ const Bcrypt = require("bcryptjs");
 const User = db.users;
 var fs = require("fs");
 var path = require('path');
+var appDir = path.dirname(require.main.filename);
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -164,6 +165,49 @@ exports.updateByUser = (req, res) => {
     });
 };
 
+exports.updateAddBusiness = (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
+  }
+
+  const userName = req.params.username;
+
+  User.findOne({ userName: userName })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: "Not found User with username" + userName });
+      } else {
+        User.findByIdAndUpdate(
+          data._id,
+          { $push: { businesses: req.body.businesses } },
+          { useFindAndModify: false }
+        )
+          .then((data) => {
+            if (!data) {
+              res.status(404).send({
+                message: `Cannot update user with id=${data._id}. Maybe user was not found!`,
+              });
+            } else res.send({ message: "User was updated successfully." });
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: "Error updating user with id=" + data._id,
+            });
+          });
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with username" + userName });
+    });
+};
+
 //add image 
 exports.updateWithImage = (req, res) => {
   if (!req.body) {
@@ -181,7 +225,7 @@ exports.updateWithImage = (req, res) => {
           .status(404)
           .send({ message: "Not found User with username" + userName });
       } else {
-        data.img.data = fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename))
+        data.img.data = fs.readFileSync(path.join(appDir + '/uploads/' + req.file.filename))
         data.img.contentType = 'image/png';
         data.save();
         res.send(data);

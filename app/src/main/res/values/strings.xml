@@ -21,12 +21,19 @@
     <string name="qrcode">Business QRCODE</string>
     <string name="adminWelcome">Hello Business: </string>
     <string name="successUsers">Customers Successfully Screened Today: </string>
+    <string name="currentStat">Current Status: </string>
+    <string name="currentImage">Validation Image: </string>
+    <string name="selectStat">Select Status </string>
+    <string name="addImage" >Add Image Documentation </string>
+    <string name="permission" >Permission to Access Files</string>
+    <string name="addStatus" >Add COVID Test Status</string>
 
     <string name="id_number">ID Number</string>
 
     <string name="status">Screening Results</string>
     <string name="username">Hello User:\u0020</string>
     <string name="business">Your screening for\u0020</string>
+
 
     <string name="admin_login">Admin Login</string>
     <string name="admin_signup">Admin SignUp</string>

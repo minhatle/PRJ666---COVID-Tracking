@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StatusActivity"
+    tools:context=".AddImage"
     android:background="@drawable/background2">
 
     <LinearLayout
@@ -12,51 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/status"
-            android:textAlignment="center"
-            android:textColor="@color/Black"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/aquirebold"/>
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:gravity="center_horizontal"
-            android:text="@string/username"
-            android:textAlignment="center"
-            android:textColor="@color/Black"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/aquire"/>
-
-        <TextView
-            android:id="@+id/userNameStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textAlignment="center"
-            android:textColor="@color/Black"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:layout_marginTop="0dp"
-            android:fontFamily="@font/aquire"
-            />
-    </LinearLayout>
+        android:orientation="vertical">
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -69,22 +25,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:gravity="center_horizontal"
-                android:text="@string/business"
+                android:text="@string/currentStat"
                 android:textAlignment="center"
                 android:textColor="@color/Black"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/aquire"/>
 
             <TextView
-                android:id="@+id/busNameStatus"
+                android:id="@+id/currStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:layout_marginTop="0dp"
                 android:fontFamily="@font/aquire"
                 />
@@ -95,20 +51,60 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
                 android:gravity="center_horizontal"
+                android:text="@string/selectStat"
                 android:textAlignment="center"
                 android:textColor="@color/Black"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:textSize="25sp"
-                android:layout_marginTop="0dp"
+                android:fontFamily="@font/aquire"/>
+
+            <Spinner
+                android:id="@+id/statusDropdown"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
+        </LinearLayout>
+            <Button
+                android:layout_marginLeft="100dp"
+                android:id="@+id/btn_addImage"
+                android:textAllCaps="false"
+                android:textColor="@color/White"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/addImage"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/aquire"
                 />
-        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/currentImage"
+                android:textAlignment="center"
+                android:textColor="@color/Black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/aquirebold"/>
+            <ImageView
+                android:id="@+id/statImage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
 
+        </LinearLayout>
     </LinearLayout>
 
 
