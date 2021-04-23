@@ -18,6 +18,7 @@ module.exports = (app , upload)  => {
     router.get("/getUser/:username", users.findUser);
     // Retrieve a single User with id
     router.put("/getUser/:username", users.updateByUser);
+    router.put("/addBuss/:username",users.updateAddBusiness);  
     //update with photo
     router.post("/uploadImage/:username", upload.single('image'), users.updateWithImage)
 

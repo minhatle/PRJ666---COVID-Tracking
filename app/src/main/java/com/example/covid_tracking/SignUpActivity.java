@@ -20,6 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -131,11 +133,21 @@ public class SignUpActivity extends AppCompatActivity {
             jsonParams.put("city", city);
         value = true;
 
+        String regex = "^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(postalCode);
+
         if (TextUtils.isEmpty(postalCode)) {
             signup_post.setError("Please Enter a Postal Code");
             signup_post.requestFocus();
             return;
-        } else
+        }
+        else if(!matcher.matches()){
+            signup_post.setError("Please Enter a Valid Postal Code");
+            signup_post.requestFocus();
+            return;
+        }
+        else
             jsonParams.put("postalCode", postalCode);
         value = true;
 

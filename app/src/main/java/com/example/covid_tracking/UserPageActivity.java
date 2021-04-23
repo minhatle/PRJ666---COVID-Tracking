@@ -43,6 +43,18 @@ public class UserPageActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Button btn_status = findViewById(R.id.btn_status);
+        btn_status.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), AddImage.class);
+                String username = getIntent().getStringExtra("USERNAME");
+                intent.putExtra("USERNAME", username);
+                startActivity(intent);
+            }
+        });
+
         Button btn_question = findViewById(R.id.btn_question);
         btn_question.setVisibility(View.GONE);
         btn_question.setOnClickListener(new View.OnClickListener(){
